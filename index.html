@@ -4,8 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Welcome to Lijyliz Apps</title>
-  <!-- Link to a modern Google Font -->
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
       font-family: 'Open Sans', sans-serif;
@@ -15,11 +20,31 @@
       text-align: center;
       color: #333;
     }
+
     h1 {
       font-size: 2.5em;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       color: #1a1a1a;
     }
+
+    /* Search box styling */
+    .search-container {
+      margin-bottom: 30px;
+    }
+    .search-container input {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    .search-container input:focus {
+      border-color: #666;
+    }
+
     .grid-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -27,75 +52,132 @@
       max-width: 1200px;
       margin: 0 auto;
     }
+
+    /* Make the entire link a tile */
     .tile {
       background: #fff;
       border-radius: 12px;
       box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       padding: 25px;
+      text-decoration: none;
+      color: inherit;
+      display: block;         /* The entire block is clickable */
+      cursor: pointer;        /* Show pointer for entire tile */
     }
     .tile:hover {
       transform: translateY(-8px);
       box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
     }
-    .tile a {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
+
     .tile img {
       width: 72px;
       height: 72px;
       object-fit: contain;
       margin-bottom: 15px;
     }
+
     .tile span {
       display: block;
       font-size: 1.2em;
       font-weight: 600;
       margin-top: 10px;
     }
+
+    /* Donate button container */
+    .donate-container {
+      margin-top: 40px;
+    }
+    .donate-button {
+      background-color: #28a745;
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      display: inline-block; /* so the hover area is just around the button text */
+    }
+    .donate-button:hover {
+      background-color: #218838;
+    }
+
     @media (max-width: 600px) {
       h1 {
         font-size: 2em;
+      }
+      .search-container input {
+        max-width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to Lijyliz Apps</h1>
-  <div class="grid-container">
-    <div class="tile">
-      <a href="https://prowlarr.lijyliz.com" target="_blank">
-        <img src="/icons/prowlarr.png" alt="Prowlarr" />
-        <span>Prowlarr</span>
-      </a>
-    </div>
-    <div class="tile">
-      <a href="https://radarr.lijyliz.com" target="_blank">
-        <img src="/icons/radarr.png" alt="Radarr" />
-        <span>Radarr</span>
-      </a>
-    </div>
-    <div class="tile">
-      <a href="https://sonarr.lijyliz.com" target="_blank">
-        <img src="/icons/sonarr.png" alt="Sonarr" />
-        <span>Sonarr</span>
-      </a>
-    </div>
-    <div class="tile">
-      <a href="https://ombi.lijyliz.com" target="_blank">
-        <img src="/icons/ombi.png" alt="Ombi" />
-        <span>Ombi</span>
-      </a>
-    </div>
-    <div class="tile">
-      <a href="https://emby.lijyliz.com" target="_blank">
-        <img src="/icons/emby.png" alt="Emby" />
-        <span>Emby</span>
-      </a>
-    </div>
-    <!-- Additional tiles can be added here in the same format -->
+
+  <h1>Welcome to Lij y Liz Apps</h1>
+
+  <!-- Optional: Search bar to filter apps quickly -->
+  <div class="search-container">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search apps..."
+      onkeyup="filterTiles()"
+    />
   </div>
+
+  <!-- Main grid of apps -->
+  <div class="grid-container" id="appsGrid">
+    <!-- Example tiles -->
+    <a href="https://prowlarr.lijyliz.com" target="_blank" class="tile">
+      <img src="/icons/prowlarr.png" alt="Prowlarr" />
+      <span>Prowlarr</span>
+    </a>
+    <a href="https://radarr.lijyliz.com" target="_blank" class="tile">
+      <img src="/icons/radarr.png" alt="Radarr" />
+      <span>Radarr</span>
+    </a>
+    <a href="https://sonarr.lijyliz.com" target="_blank" class="tile">
+      <img src="/icons/sonarr.png" alt="Sonarr" />
+      <span>Sonarr</span>
+    </a>
+    <a href="https://ombi.lijyliz.com" target="_blank" class="tile">
+      <img src="/icons/ombi.png" alt="Ombi" />
+      <span>Ombi</span>
+    </a>
+    <a href="https://emby.lijyliz.com" target="_blank" class="tile">
+      <img src="/icons/emby.png" alt="Emby" />
+      <span>Emby</span>
+    </a>
+    <!-- Add more tiles in the same pattern -->
+  </div>
+
+  <!-- Donate button -->
+  <div class="donate-container">
+    <a
+      href="https://paylinks.commerce.godaddy.com" 
+      target="_blank"
+      class="donate-button"
+    >
+      Donate
+    </a>
+  </div>
+
+  <!-- Optional JavaScript for search functionality -->
+  <script>
+    function filterTiles() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const tiles = document.querySelectorAll("#appsGrid .tile");
+
+      tiles.forEach(tile => {
+        const appName = tile.querySelector("span").innerText.toLowerCase();
+        if (appName.indexOf(query) > -1) {
+          tile.style.display = "block";
+        } else {
+          tile.style.display = "none";
+        }
+      });
+    }
+  </script>
 </body>
 </html>
