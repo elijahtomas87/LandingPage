@@ -7,8 +7,9 @@
   <title>Welcome to Lij y Liz Apps</title>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/icons8-smart_home_connection-ios7-16.png"> 
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icons8-smart_home_connection-ios7-32.png">
+  <link rel="icon" href="./icons/icons8-smart-home-ios-17-filled-16.ico" sizes="16x16" type="image/x-icon">
+  <link rel="icon" href="./icons/icons8-smart-home-ios-17-filled-32.ico" sizes="32x32" type="image/x-icon">
+  <link rel="icon" href="./icons/icons8-smart-home-ios-17-filled-96.ico" sizes="96x96" type="image/x-icon">
 
   <!-- Google Font -->
   <link
@@ -81,10 +82,12 @@
     /* Grid of Apps */
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      /* The key is using auto-fit (or auto-fill) + justify-content */
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 20px;
       max-width: 1200px;
       margin: 0 auto 40px;
+      justify-content: center; /* Ensures any leftover space is distributed, keeping tiles centered */
     }
     .tile {
       display: block;
