@@ -7,8 +7,8 @@
   <title>Welcome to Lij y Liz Apps</title>
 
   <!-- Favicon -->
-  <link type="image/png" sizes="16x16" rel="icon" href=".../icons8-smart home connection-ios7-16.png"> 
-  <link type="image/png" sizes="32x32" rel="icon" href=".../icons8-smart home connection-ios7-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/icons8-smart_home_connection-ios7-16.png"> 
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icons8-smart_home_connection-ios7-32.png">
 
   <!-- Google Font -->
   <link
@@ -17,38 +17,42 @@
   >
 
   <style>
-    /* Global Reset/Box Sizing */
+    /* Reset & Box Sizing */
     *, *::before, *::after {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
+    /* Base Styles */
     body {
       font-family: 'Open Sans', sans-serif;
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-      margin: 0;
-      padding: 40px 20px;
-      text-align: center;
       color: #333;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      text-align: center;
       min-height: 100vh;
-      position: relative; /* For "Back to Top" positioning reference */
+      position: relative;
+      transition: background-color 0.3s, color 0.3s;
+      padding: 40px 20px 80px; /* bottom padding for donate button area */
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 2.5rem;
       margin-bottom: 20px;
       color: #1a1a1a;
+      transition: color 0.3s;
     }
 
-    /* Dark mode overrides */
+    /* Dark Mode */
     body.dark {
       background: #121212;
       color: #e0e0e0;
     }
+    body.dark h1 {
+      color: #fff;
+    }
 
-    /* Search box styling */
+    /* Search Container */
     .search-container {
       margin-bottom: 30px;
     }
@@ -58,12 +62,12 @@
       padding: 10px;
       border: 2px solid #ccc;
       border-radius: 6px;
-      font-size: 1em;
-      outline: none;
-      transition: border-color 0.3s ease;
+      font-size: 1rem;
+      transition: border-color 0.3s;
     }
     .search-container input:focus {
       border-color: #666;
+      outline: none;
     }
     body.dark .search-container input {
       background: #333;
@@ -74,69 +78,72 @@
       border-color: #666;
     }
 
+    /* Grid of Apps */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 20px;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 0 auto 40px;
     }
-
-    /* Make the entire link a tile */
     .tile {
+      display: block;
       background: #fff;
       border-radius: 12px;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      padding: 25px;
-      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       color: inherit;
-      display: block;         /* The entire block is clickable */
-      cursor: pointer;        /* Show pointer for entire tile */
+      text-decoration: none;
+      padding: 25px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
     }
     .tile:hover {
-      transform: translateY(-8px);
-      box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
-
     .tile img {
       width: 72px;
       height: 72px;
       object-fit: contain;
       margin-bottom: 15px;
     }
-
     .tile span {
       display: block;
-      font-size: 1.2em;
+      font-size: 1.2rem;
       font-weight: 600;
       margin-top: 10px;
       color: #333;
     }
+
+    /* Dark Mode Overrides for Tiles */
     body.dark .tile {
       background: #1f1f1f;
-      color: #e0e0e0;
+      box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+    }
+    body.dark .tile:hover {
+      box-shadow: 0 8px 20px rgba(255,255,255,0.1);
     }
     body.dark .tile span {
       color: #e0e0e0;
     }
-    body.dark .tile:hover {
-      box-shadow: 0px 8px 20px rgba(255,255,255,0.1);
-    }
 
-    /* Donate button container */
+    /* Donate Button */
     .donate-container {
-      margin-top: 40px;
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
     }
     .donate-button {
+      display: inline-block;
       background-color: #28a745;
       color: #fff;
       padding: 15px 30px;
       border-radius: 8px;
-      text-decoration: none;
       font-weight: 600;
-      transition: background-color 0.3s ease;
-      display: inline-block; /* so the hover area is just around the button text */
+      text-decoration: none;
+      transition: background-color 0.3s;
     }
     .donate-button:hover {
       background-color: #218838;
@@ -148,16 +155,22 @@
       background-color: #333;
     }
 
-    /* Dark Mode Toggle Button */
+    /* Dark Mode Toggle - Bottom Right */
     #darkModeToggle {
+      position: fixed;
+      right: 1.5rem;
+      bottom: 5.5rem; /* ensure it doesn't overlap the Back to Top button */
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 50%;
       background-color: #fff;
-      border: 2px solid #ccc;
-      border-radius: 6px;
-      padding: 10px 20px;
+      color: #333;
       cursor: pointer;
-      font-weight: 600;
-      margin-bottom: 20px;
-      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      font-size: 1.2rem;
+      transition: background-color 0.3s;
+      z-index: 1001;
     }
     #darkModeToggle:hover {
       background-color: #f0f0f0;
@@ -165,7 +178,6 @@
     body.dark #darkModeToggle {
       background-color: #333;
       color: #fff;
-      border-color: #444;
     }
     body.dark #darkModeToggle:hover {
       background-color: #444;
@@ -174,8 +186,8 @@
     /* Back to Top Button */
     #backToTopBtn {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
+      bottom: 1.5rem;
+      right: 1.5rem;
       display: none;
       background-color: #007bff;
       color: #ffffff;
@@ -186,7 +198,7 @@
       cursor: pointer;
       font-size: 1.2rem;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s;
       z-index: 1000;
     }
     #backToTopBtn:hover {
@@ -199,24 +211,33 @@
       background-color: #333;
     }
 
+    /* Responsive Adjustments */
     @media (max-width: 600px) {
       h1 {
-        font-size: 2em;
+        font-size: 2rem;
       }
       .search-container input {
         max-width: 100%;
+      }
+      #darkModeToggle {
+        right: 1rem;
+        bottom: 6.5rem;
+      }
+      #backToTopBtn {
+        right: 1rem;
+        bottom: 1rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Dark Mode Toggle -->
-  <button id="darkModeToggle">Toggle Dark Mode</button>
+  <!-- Dark Mode Toggle (Fixed, Bottom Right) -->
+  <button id="darkModeToggle">&#9790;</button>
 
   <h1>Welcome to Lij y Liz Apps</h1>
 
-  <!-- Optional: Search bar to filter apps quickly -->
+  <!-- Search Bar -->
   <div class="search-container">
     <input
       type="text"
@@ -226,9 +247,8 @@
     />
   </div>
 
-  <!-- Main grid of apps -->
+  <!-- Grid of Apps -->
   <div class="grid-container" id="appsGrid">
-    <!-- Example tiles -->
     <a href="https://prowlarr.lijyliz.com" target="_blank" class="tile">
       <img src="/icons/prowlarr.png" alt="Prowlarr" />
       <span>Prowlarr</span>
@@ -249,13 +269,13 @@
       <img src="/icons/emby.png" alt="Emby" />
       <span>Emby</span>
     </a>
-    <!-- Add more tiles in the same pattern -->
+    <!-- Add more tiles here as needed -->
   </div>
 
-  <!-- Donate button -->
+  <!-- Donate Button at Bottom Center -->
   <div class="donate-container">
     <a
-      href="https://pay.lijyliz.com/" 
+      href="https://pay.lijyliz.com/"
       target="_blank"
       class="donate-button"
     >
@@ -275,23 +295,21 @@
 
       tiles.forEach(tile => {
         const appName = tile.querySelector("span").innerText.toLowerCase();
-        if (appName.indexOf(query) > -1) {
-          tile.style.display = "block";
-        } else {
-          tile.style.display = "none";
-        }
+        tile.style.display =
+          appName.includes(query) ? "block" : "none";
       });
     }
 
-    // On page load, check localStorage for theme preference
     document.addEventListener("DOMContentLoaded", () => {
+      // Restore theme from localStorage if set
       const storedTheme = localStorage.getItem("theme");
       if (storedTheme === "dark") {
         document.body.classList.add("dark");
       }
 
-      // Toggle Dark Mode handler
-      document.getElementById("darkModeToggle").addEventListener("click", () => {
+      // Dark Mode Toggle
+      const darkModeToggle = document.getElementById("darkModeToggle");
+      darkModeToggle.addEventListener("click", () => {
         document.body.classList.toggle("dark");
         if (document.body.classList.contains("dark")) {
           localStorage.setItem("theme", "dark");
@@ -300,14 +318,11 @@
         }
       });
 
-      // Back to Top button behavior
+      // Back to Top Button
       const backToTopBtn = document.getElementById("backToTopBtn");
       window.addEventListener("scroll", () => {
-        if (window.scrollY > 300) {
-          backToTopBtn.style.display = "block";
-        } else {
-          backToTopBtn.style.display = "none";
-        }
+        backToTopBtn.style.display =
+          window.scrollY > 300 ? "block" : "none";
       });
       backToTopBtn.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
