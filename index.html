@@ -2,16 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="description" content="A collection of apps by Lij y Liz. Filter and easily access them." />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Welcome to Lijyliz Apps</title>
+  <title>Welcome to Lij y Liz Apps</title>
 
   <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link type="image/png" sizes="16x16" rel="icon" href=".../icons8-smart home connection-ios7-16.png"> 
+  <link type="image/png" sizes="32x32" rel="icon" href=".../icons8-smart home connection-ios7-32.png">
 
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
+    /* Global Reset/Box Sizing */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Open Sans', sans-serif;
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
@@ -19,12 +31,21 @@
       padding: 40px 20px;
       text-align: center;
       color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      position: relative; /* For "Back to Top" positioning reference */
     }
 
     h1 {
       font-size: 2.5em;
       margin-bottom: 20px;
       color: #1a1a1a;
+    }
+
+    /* Dark mode overrides */
+    body.dark {
+      background: #121212;
+      color: #e0e0e0;
     }
 
     /* Search box styling */
@@ -42,6 +63,14 @@
       transition: border-color 0.3s ease;
     }
     .search-container input:focus {
+      border-color: #666;
+    }
+    body.dark .search-container input {
+      background: #333;
+      color: #fff;
+      border-color: #444;
+    }
+    body.dark .search-container input:focus {
       border-color: #666;
     }
 
@@ -82,6 +111,17 @@
       font-size: 1.2em;
       font-weight: 600;
       margin-top: 10px;
+      color: #333;
+    }
+    body.dark .tile {
+      background: #1f1f1f;
+      color: #e0e0e0;
+    }
+    body.dark .tile span {
+      color: #e0e0e0;
+    }
+    body.dark .tile:hover {
+      box-shadow: 0px 8px 20px rgba(255,255,255,0.1);
     }
 
     /* Donate button container */
@@ -101,6 +141,63 @@
     .donate-button:hover {
       background-color: #218838;
     }
+    body.dark .donate-button {
+      background-color: #444;
+    }
+    body.dark .donate-button:hover {
+      background-color: #333;
+    }
+
+    /* Dark Mode Toggle Button */
+    #darkModeToggle {
+      background-color: #fff;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 20px;
+      transition: background-color 0.3s ease;
+    }
+    #darkModeToggle:hover {
+      background-color: #f0f0f0;
+    }
+    body.dark #darkModeToggle {
+      background-color: #333;
+      color: #fff;
+      border-color: #444;
+    }
+    body.dark #darkModeToggle:hover {
+      background-color: #444;
+    }
+
+    /* Back to Top Button */
+    #backToTopBtn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: none;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+      z-index: 1000;
+    }
+    #backToTopBtn:hover {
+      background-color: #0056b3;
+    }
+    body.dark #backToTopBtn {
+      background-color: #444;
+    }
+    body.dark #backToTopBtn:hover {
+      background-color: #333;
+    }
 
     @media (max-width: 600px) {
       h1 {
@@ -113,6 +210,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Dark Mode Toggle -->
+  <button id="darkModeToggle">Toggle Dark Mode</button>
 
   <h1>Welcome to Lij y Liz Apps</h1>
 
@@ -155,7 +255,7 @@
   <!-- Donate button -->
   <div class="donate-container">
     <a
-      href="https://paylinks.commerce.godaddy.com" 
+      href="https://pay.lijyliz.com/" 
       target="_blank"
       class="donate-button"
     >
@@ -163,8 +263,12 @@
     </a>
   </div>
 
-  <!-- Optional JavaScript for search functionality -->
+  <!-- Back to Top Button -->
+  <button id="backToTopBtn" title="Go to top">&#8679;</button>
+
+  <!-- JavaScript -->
   <script>
+    // Filter tiles based on search input
     function filterTiles() {
       const query = document.getElementById("searchInput").value.toLowerCase();
       const tiles = document.querySelectorAll("#appsGrid .tile");
@@ -178,6 +282,37 @@
         }
       });
     }
+
+    // On page load, check localStorage for theme preference
+    document.addEventListener("DOMContentLoaded", () => {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "dark") {
+        document.body.classList.add("dark");
+      }
+
+      // Toggle Dark Mode handler
+      document.getElementById("darkModeToggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        if (document.body.classList.contains("dark")) {
+          localStorage.setItem("theme", "dark");
+        } else {
+          localStorage.setItem("theme", "light");
+        }
+      });
+
+      // Back to Top button behavior
+      const backToTopBtn = document.getElementById("backToTopBtn");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          backToTopBtn.style.display = "block";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      });
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
   </script>
 </body>
 </html>
